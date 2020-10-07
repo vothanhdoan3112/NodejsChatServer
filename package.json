@@ -1,0 +1,17 @@
+{
+  "name": "chat-app",
+  "version": "0.0.1",
+  "private": "true",
+  "description": "socket.io chat app",
+  "main": "run.js",
+  "scripts": {
+    "start": "node run.js"
+  },
+  "dependencies": {
+    "dynamodb": "*",
+    "ejs": "*",
+    "express": "*",
+    "socket.io": "*",
+    "socketio-file-upload": "*"
+  }
+}
