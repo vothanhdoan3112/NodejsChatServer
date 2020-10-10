@@ -12,6 +12,8 @@
     "ejs": "*",
     "express": "*",
     "socket.io": "*",
-    "socketio-file-upload": "*"
+    "socketio-file-upload": "*",
+    "dynamodb": "*",
+	"aws-sdk": "*"
   }
 }
