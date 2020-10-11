@@ -8,12 +8,11 @@
     "start": "node run.js"
   },
   "dependencies": {
-    "dynamodb": "*",
+    "aws-sdk": "^2.769.0",
+    "dynamodb": "^1.2.1",
     "ejs": "*",
     "express": "*",
     "socket.io": "*",
-    "socketio-file-upload": "*",
-    "dynamodb": "*",
-	"aws-sdk": "*"
+    "socketio-file-upload": "*"
   }
 }

@@ -2,13 +2,21 @@
 <html>
     <head>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        
         <script src="socket.io/socket.io.js"></script>
+        
         <script>
-         const socket = io('18.139.222.43:3000');
-         socket.emit('mess','aaaaa');
+         
+            const socket = io('localhost:3000');           
+            socket.emit('regAcc','0798369269','123456');
+            alert('dk thành công');
+            socket.on('IsLoginSuccess', function(flag){
+       
+            });
         </script>
     </head>
     <body>
         <h1>index here</h1>
+        <form method="" action=""></form>
     </body>
 </html>
