@@ -1,12 +1,15 @@
-const port = 3000;
-const HOST = '18.139.222.43'
+const User = {};
 
+
+const port = 3000;
+const HOST = '0.0.0.0'
+// module.exports = User;
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var fs = require('fs');
-
+// const Person = require('../entities/User');
 
 var AWS = require("aws-sdk");
 AWS.config.update({
@@ -31,22 +34,25 @@ io.sockets.on('connection', function(socket){
  
   console.log('a user connected');
   /********************* Đăng ký tài khoản *************************/
-  socket.on('regAcc',function(phone,pass){
-    let save = function () {
-      var input = {
-          phoneNum: phone,
-          password: pass          
-      };
+
+  socket.on('regAcc',function(user){
+    console.log("co nguoi ket noi");
+   // console.log(user);
+    var save = function () {
+      // var input = {
+      //     phoneNum: phone,
+      //     password: pass          
+      // };
       var params = {
           TableName: "UserAccounts",
-          Item:  input
+          Item:  user
       };
       docClient.put(params, function (err, data) {
           if (err) {
               console.log("UserAccounts::save::error - " + JSON.stringify(err, null, 2));                      
           } else {
               console.log("UserAccounts::save::success" );
-              socket.emit('IsRegSuccess',true)                   
+              socket.emit('IsRegSuccess',true);                   
           }
       });
    }
@@ -54,26 +60,42 @@ io.sockets.on('connection', function(socket){
   });
   /************************************************/
   socket.on('login',function(phone,pass){
-    let findUser = function () {
+    var findUser = function () {
 
-      var key = {
-          phoneNum: phone,
-          password: pass      
-      };
       var params = {
-          TableName: "UserAccounts",
-          Item:  input
-      };
+        TableName : "UserAccounts",
+        KeyConditionExpression: "#phone = :phone",
+        ExpressionAttributeNames:{
+            "#phone": "phoneNum"
+           
+        },
+        ExpressionAttributeValues: {
+            ":phone": phone
+        }
+    };
+
       docClient.query(params, function (err, data) {
           if (err) {
               console.log(JSON.stringify(err, null, 2));                      
           } else {            
-              socket.emit('IsLoginSuccess',true)                   
+            console.log("Query succeeded.");
+            data.Items.forEach(function(user) {         
+              console.log(user);
+              if(pass==user.password){
+                socket.emit('IsLoginSuccess',user);        
+              }else{
+                socket.emit('IsLoginSuccess',null);
+              }
+              });
+                      
           }
       });
    }
- //  findUser();
+  findUser();
   });
 });
 
 
+function prettyJSON(obj) {
+  console.log(JSON.stringify(obj, null, 2));
+}

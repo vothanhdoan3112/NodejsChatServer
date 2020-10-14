@@ -6,17 +6,24 @@
         <script src="socket.io/socket.io.js"></script>
         
         <script>
-         
-            const socket = io('localhost:3000');           
-            socket.emit('regAcc','0798369269','123456');
-            alert('dk thành công');
-            socket.on('IsLoginSuccess', function(flag){
-       
+            $(function(){
+                const socket = io();           
+                // socket.emit('regAcc','0798369289','123456');
+                // socket.on('IsRegSuccess', function(flag){
+                //     document.getElementById("title").innerHTML=flag;
+                // });    
+                
+                socket.emit('login','0798369289','123456');
+                socket.on('IsLoginSuccess', function(flag){
+                    if(flag){
+                        document.getElementById("title").innerHTML="Dang nhap thanh cong";
+                    }
+                }); 
             });
         </script>
     </head>
     <body>
-        <h1>index here</h1>
-        <form method="" action=""></form>
+        <h1 id="title">index here</h1>
+    
     </body>
 </html>
